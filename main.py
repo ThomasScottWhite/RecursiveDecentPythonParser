@@ -8,7 +8,7 @@ REGEX = [
     ("KEYWORD", r"(PRINT|\.|\[|\]|\(|\)|;)"),
     (
         "OPERATOR",
-        r"(:=|~|<|>|=|#|\+|-|&|OR|\*|/|AND)",
+        r"(:-|~|<|>|=|#|\+|-|&|OR|\*|/|AND)",
     ),  # I am not sure how I feel about this
     ("IDENTIFIER", r"\b[a-zA-Z][a-zA-Z0-9]*\b"),
     ("WHITESPACE", r"\s+"),
@@ -96,7 +96,7 @@ class Parser:
     def parse_assignment(self):
         """Assignment → Designator := Expression ."""
         self.parse_designator()
-        self.get_token_but_cry_if_not_x("OPERATOR", ":=")
+        self.get_token_but_cry_if_not_x("OPERATOR", ":-")
         self.parse_expression()
         self.get_token_but_cry_if_not_x("KEYWORD", ".")
 
@@ -185,8 +185,15 @@ class Parser:
 
 def main():
     input_program = """
-x :- 2 + 2 .
-PRINT ( x * 100 ) .     """
+x :- 1 .
+a [ i ] :- 2 .
+w [ 3 ] ^ ch :- "a" .
+t ^ key :- s .
+p ^ next ^ data :- alpha .
+x :- x + y .
+y :- x - y .
+c :- c + 1 .
+PRINT ( c ) .  """
     try:
         tokens = tokenize(input_program)
         parser = Parser(tokens)
