@@ -1,0 +1,4 @@
+PRINT ( a # b ) .
+flag :- a > b . 
+a :- a - b .  b :- b - a .
+PRINT ( "Hello" & "World!" ) .

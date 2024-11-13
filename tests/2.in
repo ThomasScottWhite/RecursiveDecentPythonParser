@@ -1,0 +1,9 @@
+x :- 1 .
+a [ i ] :- 2 .
+w [ 3 ] ^ ch :- "a" .
+t ^ key :- s .
+p ^ next ^ data :- alpha .
+x :- x + y .
+y :- x - y .
+c :- c + 1 .
+PRINT ( c ) .

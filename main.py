@@ -1,10 +1,11 @@
 import re
+import sys
 
 REGEX = [
     ("NUMBER", r"[+-]?\d+"),
     ("DECIMAL", r"[+-]?\d+\.\d+"),
     ("STRING", r'"[^"]*"'),
-    ("KEYWORD", r"\b(PRINT|\.|\[|\]|\(|\)|;)\b"),
+    ("KEYWORD", r"(PRINT|\.|\[|\]|\(|\)|;)"),
     (
         "OPERATOR",
         r"(:=|~|<|>|=|#|\+|-|&|OR|\*|/|AND)",
@@ -31,7 +32,9 @@ def tokenize(input_text):
                 position = match.end(0)
                 break
         if not match:
-            raise SyntaxError(f"Unknown token at position {position}")
+            raise SyntaxError(
+                f"Unknown token at position {position}, token {input_text[position]}"
+            )
     tokens.append(("EOF", None))
     return tokens
 
@@ -182,14 +185,12 @@ class Parser:
 
 def main():
     input_program = """
-        x := 5 .
-        y := x + 3 .
-        PRINT ( y ) .
-    """
+x :- 2 + 2 .
+PRINT ( x * 100 ) .     """
     try:
         tokens = tokenize(input_program)
         parser = Parser(tokens)
-        parser.parse(tokens)
+        parser.parse()
     except SyntaxError as e:
         print(f"Input program is invalid: {e}")
 
