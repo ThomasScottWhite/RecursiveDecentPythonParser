@@ -197,14 +197,10 @@ def parse_factor():
 
 
 def main():
-    if len(sys.argv) > 1:
-        with open(sys.argv[1], "r") as file:
-            input_program = file.read()
+    if not sys.stdin.isatty():
+        input_program = sys.stdin.read()
     else:
-        input_program = """
-        x :- 2 + 2 .
-        PRINT ( x * 100 ) . 
-        """
+        sys.exit()
 
     try:
         tokens = tokenize(input_program)
